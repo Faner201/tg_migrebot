@@ -24,6 +24,8 @@ WORKDIR /app
 
 COPY --from=builder /app/.venv /app/.venv
 COPY app app
+COPY alembic alembic
+COPY alembic.ini alembic.ini
 COPY README.md README.md
 
 CMD ["python", "-m", "app.main"]

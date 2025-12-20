@@ -4,19 +4,10 @@
 
 ## Быстрый старт (локально)
 1. Установите uv: `pip install uv`
-2. Создайте `.env` по образцу:
-   ```
-   BOT_TOKEN=changeme
-   POSTGRES_USER=migrebot
-   POSTGRES_PASSWORD=migrebot
-   POSTGRES_DB=migrebot
-   POSTGRES_HOST=localhost
-   POSTGRES_PORT=5432
-   REDIS_URL=redis://localhost:6379/0
-   LOG_LEVEL=INFO
-   ```
+2. Скопируйте `env.example` в `.env` и задайте `BOT_TOKEN`.
 3. Установите зависимости: `make sync`
-4. Запуск бота: `make run`
+4. Примените миграции: `make migrate`
+5. Запуск бота: `make run`
 
 ## Docker Compose
 ```

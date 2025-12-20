@@ -6,6 +6,11 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+    environment:
+      BOT_TOKEN: ${BOT_TOKEN:?BOT_TOKEN is required}
+      POSTGRES_DSN: ${POSTGRES_DSN:-postgresql+asyncpg://migrebot:migrebot@postgres:5432/migrebot}
+      REDIS_URL: ${REDIS_URL:-redis://redis:6379/0}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
     command: ["python", "-m", "app.main"]
     restart: unless-stopped
 
@@ -21,7 +26,7 @@ services:
       timeout: 5s
       retries: 5
     ports:
-      - "5432:5432"
+      - "15489:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
 

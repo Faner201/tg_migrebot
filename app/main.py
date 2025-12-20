@@ -18,6 +18,7 @@ async def run_bot() -> None:
     )
     dp = Dispatcher()
     bot_pkg.register_handlers(dp)
+    await bot_pkg.setup_commands_menu(bot)
     logger.info("Starting polling")
     await dp.start_polling(bot)
 

@@ -1,23 +1,19 @@
 from aiogram import Dispatcher, Router
-from aiogram.filters import Command
-from aiogram.types import Message
 
-router = Router()
+from app.bot.handlers import common, entries
+from app.bot.middleware import LoggingMiddleware, UserMiddleware
 
-
-@router.message(Command("help"))
-async def cmd_help(message: Message) -> None:
-    await message.answer(
-        "👋 Я Migrebot (MVP). Пока готовлю инфраструктуру. "
-        "Команды будут добавлены позже."
-    )
-
-
-@router.message(Command("ping"))
-async def cmd_ping(message: Message) -> None:
-    await message.answer("pong")
+main_router = Router()
+main_router.include_router(common.router)
+main_router.include_router(entries.router)
 
 
 def setup_router(dp: Dispatcher) -> None:
-    dp.include_router(router)
+    """Настроить роутеры и middleware."""
+    dp.message.middleware(LoggingMiddleware())
+    dp.callback_query.middleware(LoggingMiddleware())
+    dp.message.middleware(UserMiddleware())
+    dp.callback_query.middleware(UserMiddleware())
+
+    dp.include_router(main_router)
 
